@@ -1,7 +1,3 @@
-[user]
-	name = Michel Barret
-	email = michel.barret@gmail.com
-	signingkey = D944DE283DA9721DA32B19D2DFA5C623F28C77E8
 [alias]
 	st = status --short --branch
 	co = checkout
