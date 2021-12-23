@@ -1,0 +1,47 @@
+[user]
+	name = Michel Barret
+	email = michel.barret@gmail.com
+	signingkey = D944DE283DA9721DA32B19D2DFA5C623F28C77E8
+[alias]
+	st = status --short --branch
+	co = checkout
+	br = branch
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%aN>%Creset' --abbrev-commit
+	mr = !sh -c 'git fetch $1 merge-requests/$2/head:mr-$1-$2 && git checkout mr-$1-$2' -
+	out = changes out
+	in = changes in
+	changelog = log --pretty=format:'%s' --abbrev-commit
+	sw = switch
+[core]
+	autocrlf = input
+[credential]
+	helper = store
+[remote "origin"]
+    # prune branch if deleted on origin
+	prune = true
+[pull]
+	rebase = true
+[push]
+	default = upstream
+[merge]
+	ff = false
+[commit]
+	cleanup = scissors
+
+# GPG
+[commit]
+	gpgsign = true
+[gpg]
+	program = gpg
+
+# meld to diff & merge
+[diff]
+	tool = meld
+[difftool]
+	prompt = false
+[difftool "meld"]
+	cmd = meld "$LOCAL" "$REMOTE"
+[merge]
+	tool = meld
+[mergetool "meld"]
+	cmd = meld "$LOCAL" "$BASE" "$REMOTE" --output "$MERGED"
