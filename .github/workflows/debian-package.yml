@@ -1,0 +1,16 @@
+name: Create Debian package
+on: [push]
+jobs:
+  Create-debian-package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - run: |
+          dpkg-deb --build debian
+          mv debian.deb MBA-config.deb
+      - uses: actions/upload-artifact@v2
+        with:
+          name: MBA-config.deb
+          path: MBA-config.deb
+
