@@ -1,0 +1,56 @@
+##################
+# ~/.zsh_aliases #
+##################
+
+# Raccourcis
+alias l1='ls -1'
+alias la='ls -a'
+alias cd-='cd -'
+alias d='ls'
+alias ll='ls -lh'
+
+# Alias transparents
+alias bc='bc -q'
+alias df='df -h -x supermount'
+alias du='du -h'
+alias ls='ls -F --color=auto'
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias rm='rm --force --preserve-root'
+alias mv='mv -i'
+alias make='make --jobs'
+alias find='noglob find'
+
+# Alias utilitaires
+alias dos2unix="perl -pi -e 's/\r\n/\n/g'"
+alias reset="tput reset && printf %b '\033[3J'"
+
+# Alias sur suffixes
+alias -s zip='unzip'
+alias -s tar='tar xvf'
+alias -s 'tar.gz'='tar xvf'
+alias -s 'tz'='tar xvf'
+alias -s 'bz2'='bzip2 -d'
+alias -s jpg='mirage'
+alias -s png='mirage'
+alias -s cpp='sensible-editor'
+alias -s c='sensible-editor'
+alias -s h='sensible-editor'
+alias -s txt='sensible-pager'
+alias -s pdf='start evince'
+
+# Alias conditionnels
+if whence java &> /dev/null ; then
+  alias -s class='java'
+  alias -s jar='java -jar'
+fi
+
+whence evince  &> /dev/null && alias -s pdf='start evince'
+whence emacs   &> /dev/null && alias emacs='emacs -nw'
+whence urxvtcd &> /dev/null && alias urxvt='urxvtcd -vb -tr -sr -sk -fn "xft:Bitstream Vera Sans Mono:pixelsize=15"'
+whence gnome-terminal &> /dev/null && alias gnome-terminal="gnome-terminal --hide-menubar"
+
+alias mmv='noglob zmv -w'
+alias gotmp='$(mktemp -d)'
+
+alias lrt='ls -lrth'

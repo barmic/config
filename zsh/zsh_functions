@@ -1,0 +1,86 @@
+function apt-search (){
+  # Initialisation
+  typeset -A pkgsUninstalled
+
+  # We parse the list of packages find
+  readonly old_IFS=$IFS
+IFS='
+'
+  #TODO : remplace this loop by "aptitude search"
+  result=( $(apt-cache search "$@") )
+  for line in "${(oS)result[@]#lib}" ; do
+    pkg="${line%% *}"
+    desc="${line#* - }"
+    if $(dpkg -s "$pkg" 2> /dev/null | grep '^Status: .* installed' &> /dev/null) ; then
+      # The package is installed
+      echo "${fg[red]}${pkg}${reset_color} ${fg[blue]}${desc}${reset_color}"
+    else
+      # The package is not installed
+      if [[ "$pkg" == "$^" ]] ; then
+        match="$pkg"
+      fi
+      pkgsUninstalled[${pkg}]="${line#* - }"
+      echo "${fg[green]}${pkg}${reset_color} ${fg[blue]}${desc}${reset_color}"
+    fi
+  done
+  IFS=$old_IFS
+
+  # Display
+  #sed -ne "s/^u \([^ ]*\) - \(.*\)$/$fg[green]\1$reset_color $fg[blue]\2$reset_color/p;s/^i \([^ ]*\) - \(.*\)$/$fg[red]\1$reset_color $fg[blue]\2$reset_color/p" $tmp_file
+
+  # Propositions
+  if [[ "${#pkgsUninstalled}" -eq 1 ]]; then
+    pkg="${(k)pkgsUninstalled}"
+    echo "Voulez vous installer ${pkg} ? (y/n)"
+    read rep
+    [[ "$rep" == 'y' ]] && sudo apt install $pkg
+  elif [[ ! -z "$match" ]]; then
+    echo "Voulez vous installer $@ ? (y/n)"
+    read rep
+    [[ "$rep" == "y" ]] && sudo apt install "$@"
+  fi
+
+  # Clean
+  rm $tmp_file
+  unset tmp_file
+}
+
+function prs (){
+  ps faux | grep -v 'grep' | grep "$@" | sed -e 's/^\([^ ]*\) *\([0-9]*\) .*:[0-9][0-9] \(.*\)$/\1 \2 \3/g'
+#  ps faux | grep -v 'grep' | grep "$@" | sed -e 's/^\([ ^]*\) \([0-9]*\)/\1 \2/g'
+}
+
+function _start (){
+    "$@" &> /dev/null &
+}
+
+_complete_start () {
+    setopt localoptions noautocd nocorrectall
+    _precommand "$@"
+}
+
+function compress_pdf () {
+  mv $1 $1.back
+  gs -q -dSAFER -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dPDFSETTINGS=/printer -sOUTPUTFILE=$1 -f $1.back
+}
+
+function kill_listener () {
+  kill -KILL $(netstat -lntp | sed -n 's/.*'"$1"' .* \([0-9]*\)\/.*/\1/p')
+}
+
+function bench_http() {
+  curl -sw "\n
+            time_namelookup:  %{time_namelookup}s\n
+               time_connect:  %{time_connect}s\n
+            time_appconnect:  %{time_appconnect}s\n
+           time_pretransfer:  %{time_pretransfer}s\n
+              time_redirect:  %{time_redirect}s\n
+         time_starttransfer:  %{time_starttransfer}s\n
+                            ----------\n
+                 time_total:  %{time_total}s\n
+\n" -o /dev/null "$1"
+}
+
+function kpush() {
+    rsync -e ssh -av --progress "${2}" "${1}:/home/inovatel/sun/autodeploy"
+}
