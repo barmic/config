@@ -3,7 +3,8 @@ Version: 1.0.0
 Section: base
 Priority: optional
 Architecture: all
-Depends: git, meld
+Depends: git
+Suggests: meld
 Maintainer: Michel Barret <michel.barret@gmail.com>
 Description: Michel Barret configuration
  git config

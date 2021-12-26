@@ -10,8 +10,11 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v2
       - run: |
+          d=$(date +%F)
+          sed -i 's/^\(Version: .*\)$/\1-'$d'/' debian/DEBIAN/control
+          version=$(sed -n '/^Version:/s/^[^ ]* //p' debian/DEBIAN/control)
           dpkg-deb --build debian
-          mv debian.deb MBA-config.deb
+          mv debian.deb MBA-config-${version}.deb
       - name: Automatic Releases
         uses: marvinpinto/action-automatic-releases@v1.2.1
         with:
