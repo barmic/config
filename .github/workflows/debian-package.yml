@@ -9,8 +9,15 @@ jobs:
       - run: |
           dpkg-deb --build debian
           mv debian.deb MBA-config.deb
-      - uses: actions/upload-artifact@v2
+      - name: Automatic Releases
+        uses: marvinpinto/action-automatic-releases@v1.2.1
+
         with:
-          name: MBA-config.deb
-          path: MBA-config.deb
+          repo_token: "${{ secrets.TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: true
+          title: "Development Build"
+          files: |
+            README.md
+            *.deb
 
