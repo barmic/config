@@ -1,5 +1,8 @@
 name: Create Debian package
-on: [push]
+on:
+  push:
+    branches:
+      - dpkg
 jobs:
   Create-debian-package:
     runs-on: ubuntu-latest
