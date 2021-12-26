@@ -8,7 +8,7 @@ Download debian package and install it:
 
 ```sh
 curl ...
-dpkg -i 
+dpkg -i MBA-config.deb
 apt-get -f install
 ```
 
