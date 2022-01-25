@@ -8,6 +8,8 @@
 	in = changes in
 	changelog = log --pretty=format:'%s' --abbrev-commit
 	sw = switch
+	pushf = push --force-with-lease
+	fixup = commit -a --amend --no-edit
 [core]
 	autocrlf = input
 [credential]
@@ -19,6 +21,9 @@
 	rebase = true
 [push]
 	default = upstream
+[rebase]
+	autoStash = true
+	autosquash = true
 [merge]
 	ff = false
 [commit]
