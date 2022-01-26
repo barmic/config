@@ -1,0 +1,25 @@
+= Git configuration
+
+== Alias
+
+Some shortcuts
+
+include::gitconfig[lines=2..6]
+
+A nice git log and git status
+
+include::gitconfig[lines=7..8]
+
+Usefull alias
+
+include::gitconfig[lines=9..10]
+
+- pushf: push force with lease
+- fixup: for add changes in last commit
+
+=== Tips
+
+git fixup && git pushf
+
+== Branching
+

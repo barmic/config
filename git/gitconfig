@@ -1,13 +1,11 @@
 [alias]
-	st = status --short --branch
 	co = checkout
-	br = branch
-	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%aN>%Creset' --abbrev-commit
-	mr = !sh -c 'git fetch $1 merge-requests/$2/head:mr-$1-$2 && git checkout mr-$1-$2' -
 	out = changes out
 	in = changes in
-	changelog = log --pretty=format:'%s' --abbrev-commit
 	sw = switch
+	br = branch
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%aN>%Creset' --abbrev-commit
+	st = status --short --branch
 	pushf = push --force-with-lease
 	fixup = commit -a --amend --no-edit
 [core]
